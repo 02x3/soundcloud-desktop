@@ -1,0 +1,13 @@
+{
+  "name": "soundcloud-desktop",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "icon": "tauri icon assets/soundcloud-logo-icon.webp -o src-tauri/icons"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}
