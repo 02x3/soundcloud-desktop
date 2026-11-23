@@ -6,7 +6,7 @@ A lightweight, unofficial SoundCloud app for Windows built with Tauri, using the
 
 ## Install
 
-Download `SoundCloud_1.0.0_x64-setup.exe` from the [Releases](../../releases) page and run it.
+Download the latest `SoundCloud_<version>_x64-setup.exe` from the [Releases](../../releases) page and run it.
 The installer isn't code-signed, so Windows SmartScreen may warn you: click **More info → Run anyway**.
 
 For the Discord status, keep the Discord desktop app running and turn on
@@ -19,6 +19,7 @@ For the Discord status, keep the Discord desktop app running and turn on
 - Launching it a second time focuses the window that's already running.
 - Remembers its window size and position.
 - **Stays signed in:** SoundCloud renews its 24-hour login token when the page loads, and gives up silently if that fails (for example when Windows reopens the app right after a restart). If the page comes up signed out while your saved refresh token is still there, the app reloads it after 2, 10, 30 and 60 seconds until the renewal goes through. A real sign-out deletes that token, so it never fights you. Page loads that fail for lack of a connection are retried every 10 seconds.
+- **Multiple accounts:** open SoundCloud's profile menu (your avatar, top right) to see your accounts, switch between them, add one or remove one. Signed out, an **Accounts** button next to "Sign in" does the same; the tray menu has an Accounts submenu too. Each account lives in its own WebView2 profile, so logins, cookies and themes are fully separate, and accounts are named after the SoundCloud handle signed in to them.
 - Back and forward buttons sit at the left of SoundCloud's header. The mouse side buttons and Alt+←/→ also work.
 - **Discord Rich Presence:** while a track plays, your Discord status shows "Listening to …" with the song, artist, cover art and a progress bar. It clears 3 seconds after you pause, and the tray menu's "Show on Discord" turns it off (remembered between launches). It needs the Discord desktop app running. The Discord application ID is in `src-tauri/src/presence.rs`.
 - **Ad & tracker blocking:** about 65 ad, tracker and consent-banner domains (Google ads and analytics, Prebid exchanges, Amazon, TikTok, Facebook, Reddit, OneTrust, ...) are blocked inside WebView2 for every frame. The list is in `src-tauri/src/blocklist.rs`; run `cargo test` in `src-tauri` after editing it. Don't block `dwt.soundcloud.com`: it's SoundCloud's bot protection (DataDome), and without it follows and other account actions fail.
@@ -43,6 +44,8 @@ npm run build
 - `src-tauri/src/main.rs`: the window, navigation lock, tray and plugins.
 - `src-tauri/src/webview2.rs`: request blocking, the tray-time background mode, page-load and cookie checks, through WebView2's own APIs.
 - `src-tauri/src/session.rs`: the sign-in recovery and connection retries.
+- `src-tauri/src/accounts.rs` + `src-tauri/inject/accounts.js`: the account list, profiles and the in-page switcher.
+- `src-tauri/src/thumbbar.rs`: the like / previous / play-pause / next buttons under the taskbar hover preview.
 - `src-tauri/inject/theme.js`: the color customizer, injected into soundcloud.com.
 - `src-tauri/inject/cleanup.js`: hides empty ad slots and pauses the invisible spinners.
 - `src-tauri/inject/nav.js`: the back/forward buttons and mouse side buttons.

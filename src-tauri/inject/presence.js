@@ -1,4 +1,5 @@
-// Reads what SoundCloud's player bar is playing. The app polls this for Discord Rich Presence.
+// Reads what SoundCloud's player bar is playing. The app polls this for Discord Rich Presence
+// and the taskbar preview buttons.
 (() => {
   if (window.top !== window || !/(^|\.)soundcloud\.com$/.test(location.hostname)) return;
 
@@ -26,6 +27,7 @@
         duration: Number(timeline?.getAttribute('aria-valuemax')) || 0,
         position: Number(timeline?.getAttribute('aria-valuenow')) || 0,
         playing: !!document.querySelector('.playControls__play.playing'),
+        liked: !!document.querySelector('.playbackSoundBadge__like.sc-button-selected'),
       };
     },
   });

@@ -30,6 +30,8 @@ pub struct Track {
     pub duration: f64,
     pub position: f64,
     pub playing: bool,
+    #[serde(default)]
+    pub liked: bool,
 }
 
 pub enum Update {
